@@ -28,6 +28,7 @@ bool ChatBotApp::OnInit()
 // wxWidgets FRAME
 ChatBotFrame::ChatBotFrame(const wxString &title) : wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, wxSize(width, height))
 {
+    std::cout << "ChatBotFrame Constructor" << std::endl;
     // create panel with background image
     ChatBotFrameImagePanel *ctrlPanel = new ChatBotFrameImagePanel(this);
 
@@ -48,6 +49,10 @@ ChatBotFrame::ChatBotFrame(const wxString &title) : wxFrame(NULL, wxID_ANY, titl
 
     // position window in screen center
     this->Centre();
+}
+
+ChatBotFrame::~ChatBotFrame(){
+    std::cout << "ChatBotFrame Destructor" << std::endl;
 }
 
 void ChatBotFrame::OnEnter(wxCommandEvent &WXUNUSED(event))
@@ -71,6 +76,12 @@ END_EVENT_TABLE()
 
 ChatBotFrameImagePanel::ChatBotFrameImagePanel(wxFrame *parent) : wxPanel(parent)
 {
+    std::cout << "ChatBotFrameImagePanel Constructor" << std::endl;
+}
+
+ChatBotFrameImagePanel::~ChatBotFrameImagePanel()
+{
+    std::cout << "ChatBotFrameImagePanel Destructor" << std::endl;
 }
 
 void ChatBotFrameImagePanel::paintEvent(wxPaintEvent &evt)
@@ -107,6 +118,7 @@ END_EVENT_TABLE()
 ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
     : wxScrolledWindow(parent, id)
 {
+    std::cout << "ChatBotPanelDialog Constructor" << std::endl;
     // sizer will take care of determining the needed scroll size
     _dialogSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(_dialogSizer);
@@ -134,7 +146,7 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
 {
     //// STUDENT CODE
     ////
-
+    std::cout << "ChatBotPanelDialog Destructor" << std::endl;
     delete _chatLogic;
 
     ////
@@ -194,6 +206,7 @@ void ChatBotPanelDialog::render(wxDC &dc)
 ChatBotPanelDialogItem::ChatBotPanelDialogItem(wxPanel *parent, wxString text, bool isFromUser)
     : wxPanel(parent, -1, wxPoint(-1, -1), wxSize(-1, -1), wxBORDER_NONE)
 {
+    std::cout << "ChatBotPanelDialogItem Constructor" << std::endl;
     // retrieve image from chatbot
     wxBitmap *bitmap = isFromUser == true ? nullptr : ((ChatBotPanelDialog*)parent)->GetChatLogicHandle()->GetImageFromChatbot(); 
 
@@ -214,3 +227,8 @@ ChatBotPanelDialogItem::ChatBotPanelDialogItem(wxPanel *parent, wxString text, b
     // set background color
     this->SetBackgroundColour((isFromUser == true ? wxT("YELLOW") : wxT("BLUE")));
 }
+
+ChatBotPanelDialogItem::~ChatBotPanelDialogItem(){
+    std::cout << "ChatBotPanelDialogItem Destructor\n";
+}
+

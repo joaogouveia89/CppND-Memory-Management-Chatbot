@@ -11,7 +11,7 @@ GraphNode::~GraphNode()
     //// STUDENT CODE
     ////
 
-    delete _chatBot; 
+    // delete _chatBot; Cant delete this reference here, as it is being used on the object caller context as well
 
     ////
     //// EOF STUDENT CODE

@@ -52,6 +52,7 @@ private:
 public:
     // constructor / destructor
     ChatBotPanelDialogItem(wxPanel *parent, wxString text, bool isFromUser);
+    ~ChatBotPanelDialogItem();
 };
 
 // frame containing all control elements
@@ -68,6 +69,7 @@ private:
 public:
     // constructor / desctructor
     ChatBotFrame(const wxString &title);
+    ~ChatBotFrame();
 };
 
 // control panel for background image display
@@ -79,6 +81,7 @@ class ChatBotFrameImagePanel : public wxPanel
 public:
     // constructor / desctructor
     ChatBotFrameImagePanel(wxFrame *parent);
+    ~ChatBotFrameImagePanel();
 
     // events
     void paintEvent(wxPaintEvent &evt);
