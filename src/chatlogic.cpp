@@ -14,7 +14,7 @@
 
 ChatLogic::ChatLogic()
 {
-    std::cout << "ChatLogic Constructor{ address = " << this << "size = " << sizeof(this) <<" }" << std::endl;
+    std::cout << "ChatLogic Constructor{ address = " << this << " size = " << sizeof(this) <<" }" << std::endl;
     //// STUDENT CODE
     ////
 
