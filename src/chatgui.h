@@ -97,6 +97,7 @@ class ChatBotApp : public wxApp
 public:
     // events
     virtual bool OnInit();
+    int totalBytesUsed { 0 };
 };
 
 #endif /* CHATGUI_H_ */

@@ -14,7 +14,7 @@
 
 ChatLogic::ChatLogic()
 {
-    std::cout << "ChatLogic Constructor" << std::endl;
+    std::cout << "ChatLogic Constructor{ address = " << this << "size = " << sizeof(this) <<" }" << std::endl;
     //// STUDENT CODE
     ////
 
@@ -30,7 +30,7 @@ ChatLogic::ChatLogic()
 
 ChatLogic::~ChatLogic()
 {
-    std::cout << "ChatLogic Destructor" << std::endl;
+    std::cout << "ChatLogic Destructor{ address = " << this << " }" << std::endl;
     //// STUDENT CODE
     ////
 
