@@ -26,6 +26,8 @@ ChatBot::ChatBot(std::string filename)
     _chatLogic = nullptr;
     _rootNode = nullptr;
 
+    this->filename = filename;
+
     // load image into heap memory
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
@@ -44,6 +46,44 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+
+ChatBot::ChatBot(const ChatBot &source){
+    _chatLogic = source._chatLogic; // I copy the reference here, as this chatLogic object is supposed to pass along the instances
+    _rootNode = new GraphNode(source._rootNode->GetID());
+    _image = new wxBitmap(source.FileName(), wxBITMAP_TYPE_PNG);
+     std::cout << "ChatBot::COPYING content of instance " << &source << " to instance " << this << std::endl;
+}
+
+ChatBot& ChatBot::operator=(const ChatBot &source){
+    std::cout << "ChatBot::ASSIGNING content of instance " << &source << " to instance " << this << std::endl;
+    if (this == &source)
+        return *this;
+    delete[] _rootNode;
+    _rootNode = new GraphNode(source._rootNode->GetID());
+    delete _image;
+    _image = new wxBitmap(source.FileName(), wxBITMAP_TYPE_PNG);
+    return *this;
+}
+
+ChatBot::ChatBot(ChatBot &&source){
+    std::cout << "ChatBot::MOVING (c’tor) instance " << &source << " to instance " << this << std::endl;
+    _chatLogic = source._chatLogic;
+    _rootNode = source._rootNode;
+    _image = source._image;
+}
+
+ChatBot &ChatBot::operator=(ChatBot &&source){
+    std::cout << "ChatBot::MOVING (assign) instance " << &source << " to instance " << this << std::endl;
+    if (this == &source)
+        return *this;
+
+    delete[] _rootNode;
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic;
+    _image = source._image;
+
+    return *this;
+}
 
 ////
 //// EOF STUDENT CODE
@@ -146,3 +186,5 @@ int ChatBot::ComputeLevenshteinDistance(std::string s1, std::string s2)
 
     return result;
 }
+
+std::string ChatBot::FileName()const{ return this->filename; }
