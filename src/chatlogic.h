@@ -10,6 +10,8 @@ class ChatBot;
 class GraphEdge;
 class GraphNode;
 
+using GraphNodeUniquePtr = std::unique_ptr<GraphNode>; // to avoid long and confusing lines
+
 class ChatLogic
 {
 private:
@@ -17,7 +19,8 @@ private:
     ////
 
     // data handles (owned)
-    std::vector<GraphNode *> _nodes;
+    std::vector<GraphNodeUniquePtr> _nodes;
+    //std::vector<GraphNode *> _nodes;
     std::vector<GraphEdge *> _edges;
 
     ////
@@ -36,6 +39,7 @@ private:
     void AddAllTokensToElement(std::string tokenID, tokenlist &tokens, T &element);
 
 public:
+
     // constructor / destructor
     ChatLogic();
     ~ChatLogic();
