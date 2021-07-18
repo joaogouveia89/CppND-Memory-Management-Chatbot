@@ -10,13 +10,14 @@ class ChatBot;
 class GraphEdge;
 class GraphNode;
 
-using GraphNodeUniquePtr = std::unique_ptr<GraphNode>; // to avoid long and confusing lines
 
 class ChatLogic
 {
 private:
     //// STUDENT CODE
     ////
+
+    typedef std::unique_ptr<GraphNode> GraphNodeUniquePtr; // to avoid long and confusing lines
 
     // data handles (owned)
     std::vector<GraphNodeUniquePtr> _nodes;

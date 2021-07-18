@@ -111,18 +111,17 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                 if (idToken != tokens.end())
                 {
                     // extract id from token
+                    // reference: https://isocpp.org/wiki/faq/cpp14-language#lambda-captures
                     int id = std::stoi(idToken->second);
+                    std::unique_ptr<int> idPtr;
+                    *idPtr = id;
 
                     // node-based processing
                     if (type->second == "NODE")
                     {
                         //// STUDENT CODE
                         ////
-
-                        // check if node with this ID exists already TODO: Not working, have to check why
-                        // references: https://en.cppreference.com/w/cpp/language/lambda#Lambda_capture
-                        // 
-                        auto newNode = std::find_if(_nodes.begin(), _nodes.end(), [&id](GraphNodeUniquePtr node) { return node.get()->GetID() == id; });
+                        auto newNode = std::find_if(_nodes.begin(), _nodes.end(), [idPtr = std::move(idPtr)](GraphNodeUniquePtr node) { return node.get()->GetID() == *idPtr.get(); });
 
                         // create new element if ID does not yet exist
                         if (newNode == _nodes.end())
