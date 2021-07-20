@@ -113,15 +113,13 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                     // extract id from token
                     // reference: https://isocpp.org/wiki/faq/cpp14-language#lambda-captures
                     int id = std::stoi(idToken->second);
-                    std::unique_ptr<int> idPtr;
-                    *idPtr = id;
 
                     // node-based processing
                     if (type->second == "NODE")
                     {
                         //// STUDENT CODE
                         ////
-                        auto newNode = std::find_if(_nodes.begin(), _nodes.end(), [idPtr = std::move(idPtr)](GraphNodeUniquePtr node) { return node.get()->GetID() == *idPtr.get(); });
+                        auto newNode = std::find_if(_nodes.begin(), _nodes.end(), [&id](GraphNodeUniquePtr &node){ return node.get()->GetID() == id; });
 
                         // create new element if ID does not yet exist
                         if (newNode == _nodes.end())
@@ -150,8 +148,8 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                         if (parentToken != tokens.end() && childToken != tokens.end())
                         {
                             // get iterator on incoming and outgoing node via ID search
-                            auto parentNode = std::find_if(_nodes.begin(), _nodes.end(), [&parentToken](GraphNode *node) { return node->GetID() == std::stoi(parentToken->second); });
-                            auto childNode = std::find_if(_nodes.begin(), _nodes.end(), [&childToken](GraphNode *node) { return node->GetID() == std::stoi(childToken->second); });
+                            auto parentNode = std::find_if(_nodes.begin(), _nodes.end(), [&parentToken](GraphNodeUniquePtr &node) { return node->GetID() == std::stoi(parentToken->second); });
+                            auto childNode = std::find_if(_nodes.begin(), _nodes.end(), [&childToken](GraphNodeUniquePtr &node) { return node->GetID() == std::stoi(childToken->second); });
 
                             // create new edge
                             GraphEdge *edge = new GraphEdge(id);
