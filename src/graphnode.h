@@ -3,8 +3,8 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 #include "chatbot.h"
-
 
 // forward declarations
 class GraphEdge;
@@ -15,8 +15,10 @@ private:
     //// STUDENT CODE
     ////
 
+    typedef std::unique_ptr<GraphEdge> GraphEdgeUniquePtr; // to avoid long and confusing lines
+
     // data handles (owned)
-    std::vector<GraphEdge *> _childEdges;  // edges to subsequent nodes
+    std::vector<GraphEdgeUniquePtr> _childEdges;  // edges to subsequent nodes
 
     // data handles (not owned)
     std::vector<GraphEdge *> _parentEdges; // edges to preceding nodes 
@@ -44,7 +46,7 @@ public:
     // proprietary functions
     void AddToken(std::string token); // add answers to list
     void AddEdgeToParentNode(GraphEdge *edge);
-    void AddEdgeToChildNode(GraphEdge *edge);
+    void AddEdgeToChildNode(GraphEdgeUniquePtr edge);
 
     //// STUDENT CODE
     ////
