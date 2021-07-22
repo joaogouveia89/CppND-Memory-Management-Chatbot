@@ -28,7 +28,6 @@ bool ChatBotApp::OnInit()
 // wxWidgets FRAME
 ChatBotFrame::ChatBotFrame(const wxString &title) : wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, wxSize(width, height))
 {
-    std::cout << "ChatBotFrame Constructor{ address = " << this << " size = " << sizeof(this) <<" bytes }" << std::endl;
     // create panel with background image
     ChatBotFrameImagePanel *ctrlPanel = new ChatBotFrameImagePanel(this);
 
@@ -52,7 +51,6 @@ ChatBotFrame::ChatBotFrame(const wxString &title) : wxFrame(NULL, wxID_ANY, titl
 }
 
 ChatBotFrame::~ChatBotFrame(){
-    std::cout << "ChatBotFrame Destructor{ address = " << this << " }" << std::endl;
 }
 
 void ChatBotFrame::OnEnter(wxCommandEvent &WXUNUSED(event))
@@ -76,12 +74,10 @@ END_EVENT_TABLE()
 
 ChatBotFrameImagePanel::ChatBotFrameImagePanel(wxFrame *parent) : wxPanel(parent)
 {
-    std::cout << "ChatBotFrameImagePanel Constructor{ address = " << this << " size = " << sizeof(this) <<" bytes }" << std::endl;
 }
 
 ChatBotFrameImagePanel::~ChatBotFrameImagePanel()
 {
-    std::cout << "ChatBotFrameImagePanel Destructor{ address = " << this << " }" << std::endl;
 }
 
 void ChatBotFrameImagePanel::paintEvent(wxPaintEvent &evt)
@@ -118,7 +114,6 @@ END_EVENT_TABLE()
 ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
     : wxScrolledWindow(parent, id)
 {
-    std::cout << "ChatBotPanelDialog Constructor{ address = " << this << " size = " << sizeof(this) <<" bytes }" << std::endl;
     // sizer will take care of determining the needed scroll size
     _dialogSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(_dialogSizer);
@@ -146,7 +141,6 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
 {
     //// STUDENT CODE
     ////
-    std::cout << "ChatBotPanelDialog Destructor{ address = " << this << " }" <<std::endl;
 
     ////
     //// EOF STUDENT CODE
@@ -205,7 +199,6 @@ void ChatBotPanelDialog::render(wxDC &dc)
 ChatBotPanelDialogItem::ChatBotPanelDialogItem(wxPanel *parent, wxString text, bool isFromUser)
     : wxPanel(parent, -1, wxPoint(-1, -1), wxSize(-1, -1), wxBORDER_NONE)
 {
-    std::cout << "ChatBotPanelDialogItem Constructor{ address = " << this << " size = " << sizeof(this) <<" bytes }" << std::endl;
     // retrieve image from chatbot
     wxBitmap *bitmap = isFromUser == true ? nullptr : ((ChatBotPanelDialog*)parent)->GetChatLogicHandle()->GetImageFromChatbot(); 
 
@@ -228,6 +221,5 @@ ChatBotPanelDialogItem::ChatBotPanelDialogItem(wxPanel *parent, wxString text, b
 }
 
 ChatBotPanelDialogItem::~ChatBotPanelDialogItem(){
-    std::cout << "ChatBotPanelDialogItem Destructor{ address = " << this << " }" << std::endl;
 }
 

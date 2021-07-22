@@ -14,15 +14,14 @@
 
 ChatLogic::ChatLogic()
 {
-    std::cout << "ChatLogic Constructor{ address = " << this << " size = " << sizeof(this) <<" }" << std::endl;
     //// STUDENT CODE
     ////
+    ChatBot* tempChatBot = new ChatBot("../images/chatbot.png");
 
-    // create instance of chatbot
-    _chatBot = new ChatBot("../images/chatbot.png");
+    SetChatbotHandle(std::move(*tempChatBot));
 
     // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
-    _chatBot->SetChatLogicHandle(this);
+    _chatBot.SetChatLogicHandle(this);
 
     ////
     //// EOF STUDENT CODE
@@ -30,11 +29,10 @@ ChatLogic::ChatLogic()
 
 ChatLogic::~ChatLogic()
 {
-    std::cout << "ChatLogic Destructor{ address = " << this << " }" << std::endl;
     //// STUDENT CODE
     ////
 
-    // delete all edges
+    // delete all edges: not needed anymore, as the ownership of edges is no longer from chatlogic
     // for (auto it = std::begin(_edges); it != std::end(_edges); ++it)
     // {
     //     delete *it;
@@ -162,6 +160,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                             AddAllTokensToElement("KEYWORD", tokens, *edge);
 
                             // store reference in child node and parent node
+                            //TODO: It seems that in here, we are losing the reference of the edge, as we are moving it to parent node to give exclusive ownership. Think of a way to workaround this
                             (*childNode)->AddEdgeToParentNode(edge.get());
                             (*parentNode)->AddEdgeToChildNode(std::move(edge));
                         }
@@ -209,8 +208,8 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
     }
 
     // add chatbot to graph root node
-    _chatBot->SetRootNode(rootNode);
-    rootNode->MoveChatbotHere(_chatBot);
+    _chatBot.SetRootNode(rootNode);
+    rootNode->MoveChatbotHere(std::move(_chatBot));
     
     ////
     //// EOF STUDENT CODE
@@ -221,14 +220,14 @@ void ChatLogic::SetPanelDialogHandle(ChatBotPanelDialog *panelDialog)
     _panelDialog = panelDialog;
 }
 
-void ChatLogic::SetChatbotHandle(ChatBot *chatbot)
+void ChatLogic::SetChatbotHandle(ChatBot chatbot)
 {
     _chatBot = chatbot;
 }
 
 void ChatLogic::SendMessageToChatbot(std::string message)
 {
-    _chatBot->ReceiveMessageFromUser(message);
+    _chatBot.ReceiveMessageFromUser(message);
 }
 
 void ChatLogic::SendMessageToUser(std::string message)
@@ -238,5 +237,5 @@ void ChatLogic::SendMessageToUser(std::string message)
 
 wxBitmap *ChatLogic::GetImageFromChatbot()
 {
-    return _chatBot->GetImageHandle();
+    return _chatBot.GetImageHandle();
 }

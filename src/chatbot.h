@@ -25,7 +25,7 @@ private:
 public:
     // constructors / destructors
     ChatBot();                     // constructor WITHOUT memory allocation
-    ChatBot(std::string filename); // constructor WITH memory allocation
+    ChatBot(std::string filename); // constructor WITH memory allocatio
     // Rule of Five
     ~ChatBot(); // 1: destructor
     ChatBot(const ChatBot &source); // 2: copy constructor
@@ -40,7 +40,7 @@ public:
 
     //// STUDENT CODE
     ////
-
+     void FileName(const std::string filename);
     ////
     //// EOF STUDENT CODE
 

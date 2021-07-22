@@ -1,6 +1,8 @@
 #include "graphedge.h"
 #include "graphnode.h"
 
+#include<iostream>
+
 GraphNode::GraphNode(int id)
 {
     _id = id;
@@ -34,16 +36,16 @@ void GraphNode::AddEdgeToChildNode(GraphEdgeUniquePtr edge)
 
 //// STUDENT CODE
 ////
-void GraphNode::MoveChatbotHere(ChatBot *chatbot)
+void GraphNode::MoveChatbotHere(ChatBot &&chatbot)
 {
     _chatBot = chatbot;
-    _chatBot->SetCurrentNode(this);
+    _chatBot.SetCurrentNode(this);
 }
 
-void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)
+void GraphNode::MoveChatbotToNewNode(GraphNode* newNode)
 {
-    newNode->MoveChatbotHere(_chatBot);
-    _chatBot = nullptr; // invalidate pointer at source
+    std::cout << "Moving Chatbot to node " << newNode->GetID() << "\n";
+    newNode->MoveChatbotHere(std::move(_chatBot));
 }
 ////
 //// EOF STUDENT CODE
