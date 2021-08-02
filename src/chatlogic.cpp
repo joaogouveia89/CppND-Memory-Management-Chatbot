@@ -30,6 +30,11 @@ ChatLogic::~ChatLogic()
     //// STUDENT CODE
     ////
 
+    // delete all edges: not needed anymore, as the ownership of edges is no longer from chatlogic
+    // for (auto it = std::begin(_edges); it != std::end(_edges); ++it)
+    // {
+    //     delete *it;
+    // }
 
     ////
     //// EOF STUDENT CODE
