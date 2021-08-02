@@ -46,6 +46,7 @@ public:
 
     // getters / setters
     void SetCurrentNode(GraphNode *node);
+    GraphNode* GetCurrentNode() const;
     void SetRootNode(GraphNode *rootNode) { _rootNode = rootNode; }
     void SetChatLogicHandle(ChatLogic *chatLogic) { _chatLogic = chatLogic; }
     ChatLogic* GetChatLogicHandle() { return _chatLogic; }

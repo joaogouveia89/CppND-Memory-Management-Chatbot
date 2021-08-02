@@ -16,10 +16,7 @@ ChatLogic::ChatLogic()
 {
     //// STUDENT CODE
     ////
-    _chatBot = new ChatBot("../images/chatbot.png");
 
-    // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
-    _chatBot->SetChatLogicHandle(this);
 
     ////
     //// EOF STUDENT CODE
@@ -213,9 +210,18 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
         }
     }
 
+    ChatBot chatBot;
+
+    chatBot.FileName("../images/chatbot.png");
+
+    // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
+    chatBot.SetChatLogicHandle(this);
+
+    _chatBot = new ChatBot(chatBot.FileName());
+
     // add chatbot to graph root node
     _chatBot->SetRootNode(rootNode);
-    rootNode->MoveChatbotHere(std::move(_chatBot));
+    rootNode->_chatBot = ChatBot(std::move(chatBot));
     
     ////
     //// EOF STUDENT CODE

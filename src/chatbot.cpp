@@ -137,6 +137,7 @@ void ChatBot::ReceiveMessageFromUser(std::string message)
 
 void ChatBot::SetCurrentNode(GraphNode *node)
 {
+
     // update pointer to current node
     _currentNode = node;
 
@@ -147,6 +148,10 @@ void ChatBot::SetCurrentNode(GraphNode *node)
     std::string answer = answers.at(dis(generator));
     // send selected node answer to user
     _chatLogic->SendMessageToUser(answer);
+}
+
+GraphNode* ChatBot::GetCurrentNode() const{
+    return _currentNode;
 }
 
 int ChatBot::ComputeLevenshteinDistance(std::string s1, std::string s2)
