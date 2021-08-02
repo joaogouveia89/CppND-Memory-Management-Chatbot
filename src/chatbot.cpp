@@ -57,10 +57,6 @@ ChatBot::ChatBot(const ChatBot &source){
     _image = new wxBitmap(source.FileName(), wxBITMAP_TYPE_PNG);
     filename = source.filename;
     _currentNode = source._currentNode;
-
-    //  // data handles (not owned)
-    // GraphNode *_currentNode;
-    // std::string filename;
      std::cout << "ChatBot::COPYING content of instance " << &source << " to instance " << this << std::endl;
 }
 
@@ -111,10 +107,8 @@ void ChatBot::ReceiveMessageFromUser(std::string message)
     // loop over all edges and keywords and compute Levenshtein distance to query
     typedef std::pair<GraphEdge *, int> EdgeDist;
     std::vector<EdgeDist> levDists; // format is <ptr,levDist>
-    std::cout << "ReceiveMessageFromUser\n";
     for (size_t i = 0; i < _currentNode->GetNumberOfChildEdges(); ++i)
     {
-        std::cout << "for\n";
         GraphEdge *edge = _currentNode->GetChildEdgeAtIndex(i);
         for (auto keyword : edge->GetKeywords())
         {

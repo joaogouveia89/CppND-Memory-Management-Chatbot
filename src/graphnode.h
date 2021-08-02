@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include "chatbot.h"
+#include <iostream>
 
 // forward declarations
 class GraphEdge;
@@ -21,8 +22,10 @@ private:
     std::vector<GraphEdgeUniquePtr> _childEdges;  // edges to subsequent nodes
 
     // data handles (not owned)
-    std::vector<GraphEdge *> _parentEdges; // edges to preceding nodes 
-    ChatBot _chatBot;
+    //std::vector<GraphEdge *> _parentEdges; // edges to preceding nodes 
+    ChatBot* _chatBot;
+
+    int parentsCount = { 0 };
 
     ////
     //// EOF STUDENT CODE
@@ -41,17 +44,18 @@ public:
     int GetNumberOfChildEdges() { return _childEdges.size(); }
     GraphEdge *GetChildEdgeAtIndex(int index);
     std::vector<std::string> GetAnswers() { return _answers; }
-    int GetNumberOfParents() { return _parentEdges.size(); }
+    int GetNumberOfParents(){ return parentsCount; }
 
     // proprietary functions
     void AddToken(std::string token); // add answers to list
     void AddEdgeToParentNode(GraphEdge *edge);
-    void AddEdgeToChildNode(GraphEdgeUniquePtr edge);
+    void AddEdgeToChildNode(GraphEdgeUniquePtr &&edge);
+    void incrementParentsCount(){ ++parentsCount; };
 
     //// STUDENT CODE
     ////
 
-    void MoveChatbotHere(ChatBot &&chatbot);
+    void MoveChatbotHere(ChatBot* chatbot);
 
     ////
     //// EOF STUDENT CODE

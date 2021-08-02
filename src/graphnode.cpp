@@ -24,22 +24,17 @@ void GraphNode::AddToken(std::string token)
     _answers.push_back(token);
 }
 
-void GraphNode::AddEdgeToParentNode(GraphEdge *edge)
+void GraphNode::AddEdgeToChildNode(GraphEdgeUniquePtr &&edge)
 {
-    _parentEdges.push_back(edge);
-}
-
-void GraphNode::AddEdgeToChildNode(GraphEdgeUniquePtr edge)
-{
-    _childEdges.push_back(std::move(edge));
+    _childEdges.emplace_back(std::move(edge));
 }
 
 //// STUDENT CODE
 ////
-void GraphNode::MoveChatbotHere(ChatBot &&chatbot)
+void GraphNode::MoveChatbotHere(ChatBot* chatbot)
 {
     _chatBot = chatbot;
-    _chatBot.SetCurrentNode(this);
+    _chatBot->SetCurrentNode(this);
 }
 
 void GraphNode::MoveChatbotToNewNode(GraphNode* newNode)
@@ -54,6 +49,9 @@ GraphEdge *GraphNode::GetChildEdgeAtIndex(int index)
 {
     //// STUDENT CODE
     ////
+
+    if(index < 0) 
+        index = 0;
 
     return _childEdges[index].get();
 
