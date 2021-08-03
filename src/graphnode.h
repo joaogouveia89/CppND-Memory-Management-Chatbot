@@ -6,6 +6,7 @@
 #include <memory>
 #include "chatbot.h"
 #include <iostream>
+#include <wx/bitmap.h>
 
 // forward declarations
 class GraphEdge;
@@ -49,7 +50,10 @@ public:
 
     void SetChatBot(ChatBot ChatBot);
     void MoveChatBotToNode(GraphNode* newNode);
-    ChatBot GetChatBot() const { return _chatBot; }
+    wxBitmap* GetChatBotImageHandler() { return _chatBot.GetImageHandle(); }
+    void SendMessageToChatBot(std::string message){
+        _chatBot.ReceiveMessageFromUser(message);
+    }
 
     // proprietary functions
     void AddToken(std::string token); // add answers to list
