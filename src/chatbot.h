@@ -4,6 +4,8 @@
 #include <wx/bitmap.h>
 #include <string>
 
+#include <iostream>
+
 class GraphNode; // forward declaration
 class ChatLogic; // forward declaration
 
@@ -48,7 +50,7 @@ public:
     void SetCurrentNode(GraphNode *node);
     GraphNode* GetCurrentNode() const;
     void SetRootNode(GraphNode *rootNode) { _rootNode = rootNode; }
-    void SetChatLogicHandle(ChatLogic *chatLogic) { _chatLogic = chatLogic; }
+    void SetChatLogicHandle(ChatLogic *chatLogic) {_chatLogic = chatLogic;}
     ChatLogic* GetChatLogicHandle() { return _chatLogic; }
     wxBitmap *GetImageHandle() { return _image; }
 

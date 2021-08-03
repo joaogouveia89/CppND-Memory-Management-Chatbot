@@ -48,7 +48,6 @@ GraphEdge *GraphNode::GetChildEdgeAtIndex(int index)
 }
 
 void GraphNode::SetChatBot(ChatBot chatBot){
-    std::cout << "this->_chatBot = std::move(chatBot);\n";
     this->_chatBot = std::move(chatBot);
     this->_chatBot.SetCurrentNode(this);
 }

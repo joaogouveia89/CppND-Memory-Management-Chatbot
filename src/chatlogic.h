@@ -21,15 +21,12 @@ private:
 
     // data handles (owned)
     std::vector<GraphNodeUniquePtr> _nodes;
-    //std::vector<GraphNode *> _nodes;
-    //std::vector<GraphEdge *> _edges;
 
     ////
     //// EOF STUDENT CODE
 
     // data handles (not owned)
     GraphNode *_currentNode;
-    ChatBot* _chatBot;
     ChatBotPanelDialog *_panelDialog;
 
     // proprietary type definitions
@@ -50,9 +47,11 @@ public:
 
     // proprietary functions
     void LoadAnswerGraphFromFile(std::string filename);
-    void SendMessageToChatbot(std::string message);
     void SendMessageToUser(std::string message);
-    wxBitmap *GetImageFromChatbot();
+
+    GraphNode* GetCurrentNode() const{return _currentNode;}
+
+    void SetCurrentNode(GraphNode* node){_currentNode = node; }
 };
 
 #endif /* CHATLOGIC_H_ */

@@ -49,6 +49,7 @@ public:
 
     void SetChatBot(ChatBot ChatBot);
     void MoveChatBotToNode(GraphNode* newNode);
+    ChatBot GetChatBot() const { return _chatBot; }
 
     // proprietary functions
     void AddToken(std::string token); // add answers to list

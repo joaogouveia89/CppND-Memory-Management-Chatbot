@@ -16,7 +16,8 @@ ChatLogic::ChatLogic()
 {
     //// STUDENT CODE
     ////
-
+    _currentNode = nullptr;
+    _panelDialog = nullptr;
 
     ////
     //// EOF STUDENT CODE
@@ -227,19 +228,7 @@ void ChatLogic::SetPanelDialogHandle(ChatBotPanelDialog *panelDialog)
     _panelDialog = panelDialog;
 }
 
-void ChatLogic::SendMessageToChatbot(std::string message)
-{
-    _chatBot->ReceiveMessageFromUser(message);
-}
-
 void ChatLogic::SendMessageToUser(std::string message)
 {
-    std::cout << "entrou SendMessageToUser\n";
     _panelDialog->PrintChatbotResponse(message);
-    std::cout << "finish SendMessageToUser\n";
-}
-
-wxBitmap *ChatLogic::GetImageFromChatbot()
-{
-    return _chatBot->GetImageHandle();
 }

@@ -5,6 +5,7 @@
 #include<memory>
 
 class ChatLogic; // forward declaration
+class GraphNode; // forward declaration
 
 // middle part of the window containing the dialog between user and chatbot
 class ChatBotPanelDialog : public wxScrolledWindow
@@ -28,7 +29,7 @@ public:
     ~ChatBotPanelDialog();
 
     // getter / setter
-    ChatLogic *GetChatLogicHandle() { return _chatLogic.get(); }
+    ChatLogic *GetChatLogicHandle(){return _chatLogic.get(); }
 
     // events
     void paintEvent(wxPaintEvent &evt);

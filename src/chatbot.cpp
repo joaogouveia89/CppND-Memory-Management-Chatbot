@@ -30,7 +30,7 @@ ChatBot::ChatBot(std::string filename)
     this->filename = filename;
 
     // load image into heap memory
-    _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
+    this->_image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
 
 ChatBot::~ChatBot()
@@ -39,13 +39,6 @@ ChatBot::~ChatBot()
 
     delete _currentNode;
     delete _chatLogic;
-
-    // deallocate heap memory
-    if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
-    {
-        delete _image;
-        _image = NULL;
-    }
 }
 
 //// STUDENT CODE
@@ -54,7 +47,7 @@ ChatBot::~ChatBot()
 ChatBot::ChatBot(const ChatBot &source){
     _chatLogic = source._chatLogic; // I copy the reference here, as this chatLogic object is supposed to pass along the instances
     _rootNode = source._rootNode;
-    _image = new wxBitmap(source.FileName(), wxBITMAP_TYPE_PNG);
+    _image = source._image;
     filename = source.filename;
     _currentNode = source._currentNode;
      std::cout << "ChatBot::COPYING content of instance " << &source << " to instance " << this << std::endl;
@@ -65,21 +58,19 @@ ChatBot& ChatBot::operator=(const ChatBot &source){
     if (this == &source)
         return *this;
     _rootNode = source._rootNode;
-    delete _image;
     filename = std::string(source.filename);
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
-    delete _chatLogic;
     _chatLogic = source._chatLogic;
     return *this;
 }
 
 ChatBot::ChatBot(ChatBot &&source){
     std::cout << "ChatBot::MOVING (c’tor) instance " << &source << " to instance " << this << std::endl;
-    _chatLogic = source._chatLogic;
-    _rootNode = source._rootNode;
-    _image = source._image;
-    filename = source.filename;
-    _currentNode = source._currentNode;
+    this->_chatLogic = source._chatLogic;
+    this->_rootNode = source._rootNode;
+    this->_image = source._image;
+    this->filename = source.filename;
+    this->_currentNode = source._currentNode;
 
     source._currentNode = nullptr;
     source._image = NULL;
@@ -92,18 +83,15 @@ ChatBot &ChatBot::operator=(ChatBot &&source){
     if (this == &source)
         return *this;
 
-    delete _rootNode;
-    _rootNode = source._rootNode;
-    delete _image;
-    _image = source._image;
-    _chatLogic = source._chatLogic;
-    filename = source.filename;
-    _currentNode = source._currentNode;
+    this->_image = source._image;
+    this->_chatLogic = source._chatLogic;
+    this->_rootNode = source._rootNode;
+    this->filename = source.filename;
+    this->_currentNode = source._currentNode;
 
     source.filename = "";
     source._image = NULL;
     source._currentNode = nullptr;
-   // source._chatLogic = nullptr;
     return *this;
 }
 
@@ -140,9 +128,7 @@ void ChatBot::ReceiveMessageFromUser(std::string message)
     }
 
     // tell current node to move chatbot to new node
-    std::cout <<"Before\n";
     _currentNode->MoveChatBotToNode(newNode);
-    std::cout <<"After\n";
 }
 
 void ChatBot::SetCurrentNode(GraphNode *node)
@@ -150,6 +136,7 @@ void ChatBot::SetCurrentNode(GraphNode *node)
 
     // update pointer to current node
     _currentNode = node;
+    GetChatLogicHandle()->SetCurrentNode(_currentNode);
 
     // select a random node answer (if several answers should exist)
     std::vector<std::string> answers = _currentNode->GetAnswers();
@@ -157,9 +144,7 @@ void ChatBot::SetCurrentNode(GraphNode *node)
     std::uniform_int_distribution<int> dis(0, answers.size() - 1);
     std::string answer = answers.at(dis(generator));
     // send selected node answer to user
-    std::cout <<"_chatLogic->SendMessageToUser(answer);\n";
     _chatLogic->SendMessageToUser(answer);
-    std::cout <<"finish\n";
 }
 
 GraphNode* ChatBot::GetCurrentNode() const{
