@@ -36,9 +36,6 @@ ChatBot::ChatBot(std::string filename)
 ChatBot::~ChatBot()
 {
     std::cout << "ChatBot Destructor{ address = " << this <<" }" << std::endl;
-
-    delete _currentNode;
-    delete _chatLogic;
 }
 
 //// STUDENT CODE
@@ -72,10 +69,6 @@ ChatBot::ChatBot(ChatBot &&source){
     this->filename = source.filename;
     this->_currentNode = source._currentNode;
 
-    source._currentNode = nullptr;
-    source._image = NULL;
-    source._chatLogic = nullptr;
-    source.filename = "";
 }
 
 ChatBot &ChatBot::operator=(ChatBot &&source){
@@ -88,10 +81,6 @@ ChatBot &ChatBot::operator=(ChatBot &&source){
     this->_rootNode = source._rootNode;
     this->filename = source.filename;
     this->_currentNode = source._currentNode;
-
-    source.filename = "";
-    source._image = NULL;
-    source._currentNode = nullptr;
     return *this;
 }
 
@@ -133,10 +122,11 @@ void ChatBot::ReceiveMessageFromUser(std::string message)
 
 void ChatBot::SetCurrentNode(GraphNode *node)
 {
-
     // update pointer to current node
+    
     _currentNode = node;
-    GetChatLogicHandle()->SetCurrentNode(_currentNode);
+    _chatLogic->SetCurrentNode(_currentNode);
+    
 
     // select a random node answer (if several answers should exist)
     std::vector<std::string> answers = _currentNode->GetAnswers();
