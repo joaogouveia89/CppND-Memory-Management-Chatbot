@@ -15,6 +15,7 @@ class GraphNode
 private:
     //// STUDENT CODE
     ////
+    ChatBot _chatBot;
 
     typedef std::unique_ptr<GraphEdge> GraphEdgeUniquePtr; // to avoid long and confusing lines
 
@@ -34,10 +35,10 @@ private:
     std::vector<std::string> _answers;
 
 public:
-    ChatBot _chatBot;
     // constructor / destructor
     GraphNode(int id);
     ~GraphNode();
+
 
     // getter / setter
     int GetID() { return _id; }
@@ -46,21 +47,14 @@ public:
     std::vector<std::string> GetAnswers() { return _answers; }
     int GetNumberOfParents(){ return parentsCount; }
 
+    void SetChatBot(ChatBot ChatBot);
+    void MoveChatBotToNode(GraphNode* newNode);
+
     // proprietary functions
     void AddToken(std::string token); // add answers to list
     void AddEdgeToParentNode(GraphEdge *edge);
     void AddEdgeToChildNode(GraphEdgeUniquePtr &&edge);
     void incrementParentsCount(){ ++parentsCount; };
-
-    //// STUDENT CODE
-    ////
-
-    void MoveChatbotHere(ChatBot &&chatbot);
-
-    ////
-    //// EOF STUDENT CODE
-
-    void MoveChatbotToNewNode(GraphNode* newNode);
 };
 
 #endif /* GRAPHNODE_H_ */

@@ -210,18 +210,13 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
         }
     }
 
-    ChatBot chatBot;
-
-    chatBot.FileName("../images/chatbot.png");
-
+    // add chatbot to graph root node
+    ChatBot chatBot = ChatBot("../images/chatbot.png");
     // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
     chatBot.SetChatLogicHandle(this);
+    chatBot.SetRootNode(rootNode);
 
-    _chatBot = new ChatBot(chatBot.FileName());
-
-    // add chatbot to graph root node
-    _chatBot->SetRootNode(rootNode);
-    rootNode->_chatBot = ChatBot(std::move(chatBot));
+    rootNode->SetChatBot(std::move(chatBot));
     
     ////
     //// EOF STUDENT CODE
@@ -239,7 +234,9 @@ void ChatLogic::SendMessageToChatbot(std::string message)
 
 void ChatLogic::SendMessageToUser(std::string message)
 {
+    std::cout << "entrou SendMessageToUser\n";
     _panelDialog->PrintChatbotResponse(message);
+    std::cout << "finish SendMessageToUser\n";
 }
 
 wxBitmap *ChatLogic::GetImageFromChatbot()

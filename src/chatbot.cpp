@@ -80,6 +80,11 @@ ChatBot::ChatBot(ChatBot &&source){
     _image = source._image;
     filename = source.filename;
     _currentNode = source._currentNode;
+
+    source._currentNode = nullptr;
+    source._image = NULL;
+    source._chatLogic = nullptr;
+    source.filename = "";
 }
 
 ChatBot &ChatBot::operator=(ChatBot &&source){
@@ -87,15 +92,18 @@ ChatBot &ChatBot::operator=(ChatBot &&source){
     if (this == &source)
         return *this;
 
+    delete _rootNode;
     _rootNode = source._rootNode;
-    delete _chatLogic;
-    _chatLogic = source._chatLogic;
     delete _image;
-    filename = source.filename;
     _image = source._image;
-    delete _currentNode;
+    _chatLogic = source._chatLogic;
+    filename = source.filename;
     _currentNode = source._currentNode;
 
+    source.filename = "";
+    source._image = NULL;
+    source._currentNode = nullptr;
+   // source._chatLogic = nullptr;
     return *this;
 }
 
@@ -132,7 +140,9 @@ void ChatBot::ReceiveMessageFromUser(std::string message)
     }
 
     // tell current node to move chatbot to new node
-    _currentNode->MoveChatbotToNewNode(std::move(newNode));
+    std::cout <<"Before\n";
+    _currentNode->MoveChatBotToNode(newNode);
+    std::cout <<"After\n";
 }
 
 void ChatBot::SetCurrentNode(GraphNode *node)
@@ -147,7 +157,9 @@ void ChatBot::SetCurrentNode(GraphNode *node)
     std::uniform_int_distribution<int> dis(0, answers.size() - 1);
     std::string answer = answers.at(dis(generator));
     // send selected node answer to user
+    std::cout <<"_chatLogic->SendMessageToUser(answer);\n";
     _chatLogic->SendMessageToUser(answer);
+    std::cout <<"finish\n";
 }
 
 GraphNode* ChatBot::GetCurrentNode() const{
