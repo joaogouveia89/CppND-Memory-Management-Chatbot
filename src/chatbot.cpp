@@ -34,6 +34,9 @@ ChatBot::~ChatBot()
     std::cout << "ChatBot Destructor{ address = " << this <<" }" << std::endl;
     if(isCurrentInstance()){
         delete _image;
+        //delete _rootNode;
+        //delete _chatLogic
+        //delete _currentNode
     }
 }
 
@@ -43,7 +46,7 @@ ChatBot::~ChatBot()
 ChatBot::ChatBot(const ChatBot &source){
     _chatLogic = source._chatLogic; // I copy the reference here, as this chatLogic object is supposed to pass along the instances
     _rootNode = source._rootNode;
-    _image = source._image;
+    *_image = *source._image;
     filename = source.filename;
     _currentNode = source._currentNode;
      std::cout << "ChatBot::COPYING content of instance " << &source << " to instance " << this << std::endl;
@@ -56,7 +59,7 @@ ChatBot& ChatBot::operator=(const ChatBot &source){
     ResetAttributes();
     _rootNode = source._rootNode;
     filename = std::string(source.filename);
-    _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
+    *_image = *source._image;
     _chatLogic = source._chatLogic;
     return *this;
 }
