@@ -5,7 +5,6 @@
 #include <string>
 #include <memory>
 #include "chatbot.h"
-#include <iostream>
 #include <wx/bitmap.h>
 
 // forward declarations
@@ -22,9 +21,6 @@ private:
 
     // data handles (owned)
     std::vector<GraphEdgeUniquePtr> _childEdges;  // edges to subsequent nodes
-
-    // data handles (not owned)
-    //std::vector<GraphEdge *> _parentEdges; // edges to preceding nodes 
 
     int parentsCount = { 0 };
 

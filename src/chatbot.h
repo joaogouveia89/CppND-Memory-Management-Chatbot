@@ -4,8 +4,6 @@
 #include <wx/bitmap.h>
 #include <string>
 
-#include <iostream>
-
 class GraphNode; // forward declaration
 class ChatLogic; // forward declaration
 
@@ -42,7 +40,9 @@ public:
 
     //// STUDENT CODE
     ////
-     void FileName(const std::string filename);
+    void ResetAttributes();
+    void FileName(const std::string filename);
+    bool isCurrentInstance();
     ////
     //// EOF STUDENT CODE
 

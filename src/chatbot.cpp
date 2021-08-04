@@ -12,9 +12,7 @@
 ChatBot::ChatBot()
 {
     // invalidate data handles
-    _image = nullptr;
-    _chatLogic = nullptr;
-    _rootNode = nullptr;
+    ResetAttributes();
 }
 
 // constructor WITH memory allocation
@@ -23,9 +21,7 @@ ChatBot::ChatBot(std::string filename)
     std::cout << "ChatBot Constructor{ address = " << this << " size = " << sizeof(this) <<" bytes }" << std::endl;
     
     // invalidate data handles
-    _chatLogic = nullptr;
-    _rootNode = nullptr;
-    _currentNode = nullptr;
+    ResetAttributes();
 
     this->filename = filename;
 
@@ -36,6 +32,9 @@ ChatBot::ChatBot(std::string filename)
 ChatBot::~ChatBot()
 {
     std::cout << "ChatBot Destructor{ address = " << this <<" }" << std::endl;
+    if(isCurrentInstance()){
+        delete _image;
+    }
 }
 
 //// STUDENT CODE
@@ -54,6 +53,7 @@ ChatBot& ChatBot::operator=(const ChatBot &source){
     std::cout << "ChatBot::ASSIGNING content of instance " << &source << " to instance " << this << std::endl;
     if (this == &source)
         return *this;
+    ResetAttributes();
     _rootNode = source._rootNode;
     filename = std::string(source.filename);
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
@@ -68,20 +68,32 @@ ChatBot::ChatBot(ChatBot &&source){
     this->_image = source._image;
     this->filename = source.filename;
     this->_currentNode = source._currentNode;
-
+    source.ResetAttributes();
 }
 
 ChatBot &ChatBot::operator=(ChatBot &&source){
     std::cout << "ChatBot::MOVING (assign) instance " << &source << " to instance " << this << std::endl;
     if (this == &source)
         return *this;
-
+    ResetAttributes();
     this->_image = source._image;
     this->_chatLogic = source._chatLogic;
     this->_rootNode = source._rootNode;
     this->filename = source.filename;
     this->_currentNode = source._currentNode;
+    source.ResetAttributes();
     return *this;
+}
+
+void ChatBot::ResetAttributes(){
+    this->_rootNode = nullptr;
+    this->_image = NULL;
+    this->_chatLogic = nullptr;
+    this->_currentNode = nullptr;
+}
+
+bool ChatBot::isCurrentInstance(){
+    return _rootNode != nullptr && _image != NULL && _chatLogic != nullptr && _currentNode != nullptr;
 }
 
 ////
